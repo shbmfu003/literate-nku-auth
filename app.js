@@ -31,8 +31,7 @@ const app = express();
 //Bring in Models
 // Article Model
 let Article = require('./models/article');
-// User Model
-let User = require('./models/user');
+
 
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));
