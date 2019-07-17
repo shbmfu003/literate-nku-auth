@@ -4,7 +4,6 @@ const router = express.Router();
 //Bring in Article Models
 let Article = require('../models/article');
 
-
 // Add Route
 router.get('/add', function(req, res){
   res.render('add_article', {
@@ -15,10 +14,10 @@ router.get('/add', function(req, res){
 // Add Submit POST Route
 router.post('/add', function(req, res){
   req.checkBody('title', 'Title is required').notEmpty();
-  req.checkBody('author', 'Author is required').notEmpty();
+  //req.checkBody('author', 'Author is required').notEmpty();
   req.checkBody('body', 'Body is required').notEmpty();
 
-  // Get errors
+  // Get Errors
   let errors = req.validationErrors();
   if(errors){
     res.render('add_article', {
@@ -27,7 +26,7 @@ router.post('/add', function(req, res){
   }else {
       let article = new Article();
       article.title  = req.body.title;
-      article.author = req.body.author;
+      article.author = req.user._id;
       article.body = req.body.body;
 
       article.save(function(err){
@@ -85,10 +84,13 @@ router.delete('/:id', function(req, res){
 // Get Single Article
 router.get('/:id', function(req, res){
   Article.findById(req.params.id, function(err, article){
-    res.render('article', {
-      article:article
+    User.findById(article.author, function(err, user){
+      res.render('article', {
+        article:article,
+        author:user.name
+      });
     });
-  })
+  });
 });
 
 module.exports = router;
