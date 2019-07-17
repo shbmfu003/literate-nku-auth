@@ -51,7 +51,7 @@ router.post('/register', function(req, res) {
             console.log(err);
             return;
           } else {
-            req.flash('success', 'You are now registered and can log in');
+            req.flash('success', 'User Successfully Registered and Can Log In');
             res.redirect('/users/login');
           }
         });
@@ -72,12 +72,22 @@ router.post('/login', function(req, res, next) {
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
+  req.flash('success', 'User Logged In');
+});
+
+// Profile Form
+router.get('/profile', function(req, res) {
+  res.render('profile');
+});
+
+// Profile Process
+router.post('/profile', function(req, res) {
 });
 
 // Logout
 router.get('/logout', function(req, res) {
   req.logout();
-  req.flash('success', 'User logged out');
+  req.flash('success', 'User Logged Out');
   res.redirect('/users/login');
 });
 

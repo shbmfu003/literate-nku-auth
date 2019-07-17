@@ -1,4 +1,4 @@
-// Express Application
+// Applications
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -13,6 +13,7 @@ const config = require('./config/database');
 mongoose.connect(config.database, {
   useNewUrlParser: true
 });
+
 let db = mongoose.connection;
 
 // Check Connection
@@ -33,7 +34,7 @@ const app = express();
 let Article = require('./models/article');
 
 
-// Load View Engine
+// Load View Engine for Pug
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
